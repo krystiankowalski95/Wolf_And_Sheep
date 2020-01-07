@@ -12,8 +12,8 @@ window.resizable(False, False)
 canvas = Canvas(window, width=3* init_pos_limit, height=3 * init_pos_limit, bg="#363636")
 canvas.pack()
 
-var = StringVar()
-sheep_label = Label(window, width=init_pos_limit//10, textvariable=var).place(x=2 * init_pos_limit, y=3 * init_pos_limit + init_pos_limit//21)
+label_value = StringVar()
+sheep_label = Label(window, width=50, textvariable=label_value).place(x=init_pos_limit, y=3 * init_pos_limit+10)
 
 point_list = []
 wolf_point_list = []
@@ -28,7 +28,7 @@ def remove_wolf_points():
         canvas.delete(point)
 
 def update_sheep_label():
-    var.set('Sheeps alive no. : ' + str(len(sheepList)))
+    label_value.set('Sheeps alive no. : ' + str(len(sheepList)))
 
 def moveAllSheeps():
     remove_points()
@@ -95,11 +95,11 @@ canvas.bind("<Button-1>", left_click)
 canvas.bind("<Button-2>", right_click)
 canvas.bind("<Button-3>", right_click)
 
-step = Button(window, text="Step", width=init_pos_limit//30, height=1, command=step)\
-    .place(x=init_pos_limit + 10, y=3 * init_pos_limit + init_pos_limit//20)
+step = Button(window, text="Step", width=10, height=1, command=step)\
+    .place(x=init_pos_limit + 10, y=3 * init_pos_limit + 10)
 
-reset = Button(window, text="Reset", width=init_pos_limit//30, height=1, command=reset)\
-    .place(x=init_pos_limit - 50, y=3 * init_pos_limit + init_pos_limit//20)
+reset = Button(window, text="Reset", width=10, height=1, command=reset)\
+    .place(x=init_pos_limit - 100, y=3 * init_pos_limit + 10)
 
 
 if __name__ == '__main__':
