@@ -32,9 +32,11 @@ def update_sheep_label():
 
 def moveAllSheeps():
     remove_points()
+    i = 0
     for sheep in sheepList:
         sheep.move()
-        point_list.append(create_circle(sheep.x_position, sheep.y_position, 1, "blue"))
+        point_list.append(create_circle(sheep.x_position, sheep.y_position, 5, "blue"))
+        i = i + 1
 
 
 
@@ -46,12 +48,7 @@ def create_circle(x, y, r, color):
     return canvas.create_oval(x0, y0, x1, y1, fill=color)
 
 wolf = Wolf(10,init_pos_limit)
-wolf_point_list.append(create_circle(wolf.x_position, wolf.y_position, 1, "red"))
-
-
-def key(event):
-    print("pressed", repr(event.char))
-
+wolf_point_list.append(create_circle(wolf.x_position, wolf.y_position, 5, "red"))
 
 def left_click(event):
     add_sheep(event.x, event.y, 5)
@@ -59,12 +56,12 @@ def left_click(event):
 def right_click(event):
     remove_wolf_points()
     wolf.change_position(event.x, event.y)
-    wolf_point_list.append(create_circle(wolf.x_position,wolf.y_position,1,"red"))
+    wolf_point_list.append(create_circle(wolf.x_position,wolf.y_position,5,"red"))
 
 
 def add_sheep(x,y,sheep_distance):
     sheepList.append(Sheep(sheep_distance, x, y))
-    point_list.append(create_circle(x, y, 1, "blue"))
+    point_list.append(create_circle(x, y, 5, "blue"))
     update_sheep_label()
 
 
@@ -78,21 +75,27 @@ def step():
         simulate()
 
 def reset():
-    wolf.change_position(1.5 * init_pos_limit, 1.5 * init_pos_limit)
+    canvas.delete("all")
     sheepList.clear()
     update_sheep_label()
-    canvas.delete("all")
+    remove_wolf_points()
+    wolf.change_position(1.5 * init_pos_limit, 1.5 * init_pos_limit)
+    wolf_point_list.append(create_circle(wolf.x_position, wolf.y_position, 5, "red"))
+
 
 
 def simulate():
     moveAllSheeps()
     wolf.move();
-    point_list.append(create_circle(wolf.x_position, wolf.y_position, 1, "red"))
+    point_list.append(create_circle(wolf.x_position, wolf.y_position, 5, "red"))
     update_sheep_label()
+    if len(sheepList) == 0:
+        popup = Toplevel(window)
+        popup.title("No sheep alive!")
+        display = Label(popup, text = "All sheeps has been eaten!")
+        display.pack()
 
-canvas.bind("<Key>", key)
 canvas.bind("<Button-1>", left_click)
-canvas.bind("<Button-2>", right_click)
 canvas.bind("<Button-3>", right_click)
 
 step = Button(window, text="Step", width=10, height=1, command=step)\

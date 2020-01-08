@@ -13,25 +13,23 @@ class Wolf(Animal):
 
 
     def move(self):
-        distanceList = []
         minimum = math.sqrt((sheepList[0].x_position - self.x_position)**2 +(sheepList[0].y_position - self.y_position)**2)
         index = 0
         for i in range(len(sheepList)):
             if i == 0:
                 continue    #przed forem, minimum jest liczone dla i=0
             distance = math.sqrt((sheepList[i].x_position - self.x_position)**2 +(sheepList[i].y_position - self.y_position)**2)
-            distanceList.append(distance)
             if minimum > distance:
                 minimum = distance
                 index = i
 
         sheep2follow = sheepList[index]
         if minimum <= self.move_distance:
-            print("Sheep {} has been eaten".format(sheepList[i].id))
-            self.x_position = sheepList[i].x_position
-            self.y_position = sheepList[i].y_position
-            eatenSheeps.append(sheepList[i])
-            sheepList.remove((sheepList[i]))
+            print("Sheep {} has been eaten".format(sheepList[index].id))
+            self.x_position = sheepList[index].x_position
+            self.y_position = sheepList[index].y_position
+            eatenSheeps.append(sheepList[index])
+            sheepList.remove((sheepList[index]))
         else:
         #  przesunięcie w kierunku pozycji owcy
             vect = numpy.array([sheep2follow.x_position - self.x_position, sheep2follow.y_position - self.y_position])
