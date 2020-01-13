@@ -3,8 +3,8 @@ import uuid
 from Animal import Animal
 import random
 
-sheepList = []
-eatenSheeps = []
+sheep_list = []
+eaten_sheeps = []
 
 class Sheep(Animal):
     def __init__(self, sheep_move_dist,init_pos_limit):
